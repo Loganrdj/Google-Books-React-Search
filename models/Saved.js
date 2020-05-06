@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const SavedSchema = new Schema({
     // Add data types here
+    _id: { type: String },
     title: {type: String, require: true},
     authors: {type: Array, require: true},
     description: {type: String, require: true},
