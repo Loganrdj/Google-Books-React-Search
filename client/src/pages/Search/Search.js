@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Form from '../../components/Form';
 import apiCall from '../../utils/api';
+import Results from '../../components/Results/index';
 
 class Search extends Component{
 
@@ -22,7 +23,7 @@ class Search extends Component{
 
     //Add search functionality here
     componentDidMount(){
-        this.findBook();
+        // this.findBook();
     }
 
     handleInputChange = (e) => {
@@ -36,16 +37,22 @@ class Search extends Component{
     handleFormSubmit = (e) => {
         e.preventDefault();
         this.findBook(this.state.search)
+
     }
 
     findBook = (searchTerms) => {
         apiCall.retrieveBook(searchTerms).then(res => {
-            this.setState({ 
-                books: res.data.items.map(bookInformation => {
-                    this.defineBook(bookInformation)
-                })
+            var bookMap = res.data.items.map(bookInformation => {
+                return this.defineBook(bookInformation)
             })
+            // console.log(bookMap)
+            this.setState({ 
+                books: bookMap
+            })
+            // console.log(res)
+            console.log(this.state.books)
         })
+        
     }
 
     render(){
@@ -57,7 +64,8 @@ class Search extends Component{
                     handleFormSubmit={this.handleFormSubmit}
                 />
                 <div className="container">
-                    Results go here
+                    <Results books={this.state.books}></Results>
+
                 </div>
             </div>
         )

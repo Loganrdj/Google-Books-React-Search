@@ -5,15 +5,15 @@ export default {
         return axios.get(`https://www.googleapis.com/books/v1/volumes?q=${query}`)
     },
 
-    GetSavedBooks: () => {
+    getSavedBooks: () => {
         return axios.get("/saved")
     },
 
-    SaveBook: (bookInfo) => {
+    saveBook: (bookInfo) => {
         return axios.post("/", bookInfo).then(result => result.data)
     },
 
-    RemoveBook: (id) => {
+    removeBook: (id) => {
         return axios.delete("/saved" + id).then(result => result.data)
     }
 }
