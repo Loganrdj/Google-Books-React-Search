@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { Component } from 'react';
+import api from './../../utils/api'
 
 //             title: bookInformation.volumeInfo.title,
 //             authors: bookInformation.volumeInfo.authors,
@@ -6,47 +7,76 @@ import React from 'react';
 //             image: bookInformation.volumeInfo.thumbnail,
 //             link: bookInformation.volumeInfo.previewLink
 
-function Results(props){
-    return (
-        <div className="container-fluid border">
-            <div className="row border">
-                <div className="col-md-2">
-                    <h2>Title</h2>
+class Results extends Component{
+
+    state = {
+        books: []
+    }
+
+    componentDidMount(){
+        api.getSavedBooks().then(books => {
+            this.setState({
+                books: books
+            })
+        })
+    }
+
+    bookButton = (book) => {
+        console.log(book)
+        api.saveBook(book).then(res => {
+            console.log("Successfully saved")
+        }).catch(err => console.error(err))
+        console.log(this.state.books)
+    }
+
+    render(){
+        return (
+            <div className="container-fluid border">
+                <div className="row border">
+                    <div className="col-md-2">
+                        <h4>Title</h4>
+                    </div>
+                    <div className="col-md-2">
+                        <h4>Authors</h4>
+                    </div>
+                    <div className="col-md-3">
+                        <h4>Description</h4>
+                    </div>
+                    <div className="col-md-2">
+                        <h4>Image</h4>
+                    </div>
+                    <div className="col-md-1">
+                        <h4>Book Link</h4>
+                    </div>
+                    <div className="col-md-1">
+                        <h4>Save Book!</h4>
+                    </div>
                 </div>
-                <div className="col-md-2">
-                    <h2>Authors</h2>
+                {this.props.books ? this.props.books.map(book =>
+                <div className="row border">
+                    <div className="col-md-2">
+                        <h4>{book.title}</h4>
+                    </div>
+                    <div className="col-md-2">
+                        <h4>{book.authors}</h4>
+                    </div>
+                    <div className="col-md-3">
+                        <p>{book.description}</p>
+                    </div>
+                    <div className="col-md-2">
+                        <img src={book.image} alt={'Image of ' + book.title}></img>
+                    </div>
+                    <div className="col-md-1">
+                        <a href={book.link}>Link</a>
+                    </div>
+                    <div className="col-md-1">
+                        <button onClick={() => this.bookButton(book)}></button>
+                    </div>
                 </div>
-                <div className="col-md-4">
-                    <h2>Description</h2>
-                </div>
-                <div className="col-md-2">
-                    <h2>Image</h2>
-                </div>
-                <div className="col-md-2">
-                    <h2>Book Link</h2>
-                </div>
+                ):""}
             </div>
-            {props.books ? props.books.map(book =>
-            <div className="row border">
-                <div className="col-md-2">
-                    <h2>{book.title}</h2>
-                </div>
-                <div className="col-md-2">
-                    <h4>{book.authors}</h4>
-                </div>
-                <div className="col-md-4">
-                    <p>{book.description}</p>
-                </div>
-                <div className="col-md-2">
-                    <img src={book.image} alt={'Image of ' + book.title}></img>
-                </div>
-                <div className="col-md-2">
-                    <a href={book.link}>Link to book here</a>
-                </div>
-            </div>
-            ):""}
-        </div>
-    )
+        )
+    }
 }
 
 export default Results;

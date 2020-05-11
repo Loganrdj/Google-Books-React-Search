@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Form from '../../components/Form';
-import apiCall from '../../utils/api';
+import api from '../../utils/api';
 import Results from '../../components/Results/index';
 
 class Search extends Component{
@@ -41,7 +41,7 @@ class Search extends Component{
     }
 
     findBook = (searchTerms) => {
-        apiCall.retrieveBook(searchTerms).then(res => {
+        api.retrieveBook(searchTerms).then(res => {
             var bookMap = res.data.items.map(bookInformation => {
                 return this.defineBook(bookInformation)
             })

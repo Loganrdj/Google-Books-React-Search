@@ -10,10 +10,11 @@ export default {
     },
 
     saveBook: (bookInfo) => {
-        return axios.post("/", bookInfo).then(result => result.data)
+        console.log("Hit API!")
+        return axios.post("/saved", bookInfo)
     },
 
     removeBook: (id) => {
-        return axios.delete("/saved" + id).then(result => result.data)
+        return axios.delete("/saved/" + id).then(result => result.data)
     }
 }

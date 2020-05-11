@@ -2,6 +2,7 @@ const db = require('../models');
 
 module.exports = {
     findAll: (req, res) => {
+        console.log("Finding All")
         db.Saved.find().then(
             dbModel => {
                 res.json(dbModel)
@@ -18,11 +19,12 @@ module.exports = {
     },
 
     create: (req, res) => {
-        db.Saved.create(req.body).then(
-            dbModel => {
-                res.json(dbModel)
-            }
-        ).catch(err => res.status(422).json(err))
+        console.log("Creating book");
+        // db.Saved.create(req.body).then(
+        //     dbModel => {
+        //         res.json(dbModel)
+        //     }
+        // ).catch(err => res.status(422).json(err))
     },
 
     remove: (req, res) => {
